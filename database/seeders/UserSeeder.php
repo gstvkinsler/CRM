@@ -16,15 +16,18 @@ class UserSeeder extends Seeder
         User::create([
             'name' => 'Gustavo',
             'email' => 'gustavo@gmail.com',
+            'phone_number' => '41988885555',
             'password' => Hash::make('123456a', ['rounds' => 12]),
+            'cpf' => '12345678901',
         ]);
     
         User::create([
             'name' => 'Joao',
             'email' => 'joao@gmail.com',
+            'phone_number' => '41988885554',
             'password' => Hash::make('123456a', ['rounds' => 12]),
+            'cpf' => '12345678901',
         ]);
         
-
     }
 }
