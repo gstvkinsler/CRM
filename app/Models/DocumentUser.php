@@ -16,4 +16,9 @@ class DocumentUser extends Model
         'type',
         'document',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

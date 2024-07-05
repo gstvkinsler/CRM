@@ -38,4 +38,19 @@ class UserService
         }
         DocumentUser::insert($documentos);
     }
+
+    public function updateUser(array $data, int $id): User
+    {   
+        $user = User::findOrFail($id);
+        $user->name = $data['name']; 
+        $user->email = $data['email'];
+        $user->password = $data['password'] ? Hash::make($data['password']) : $user->password;
+        $user->phone_number = $data['phone_number'];
+        $user->save();
+          
+        DocumentUser::where('user_id', $user->id)->delete(); 
+        $this->createDocuments($user->id, $data['documents']);
+        
+        return $user;
+    }
 }

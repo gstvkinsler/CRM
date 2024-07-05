@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use App\Http\Services\UserService;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Request;
 
 class UserController extends Controller
@@ -37,7 +37,7 @@ class UserController extends Controller
             ], 200);
     }
 
-    public function store(StoreUserRequest $request): JsonResponse
+    public function store(UserRequest $request): JsonResponse
     {
         $validations = $request->validated();
 
@@ -57,5 +57,27 @@ class UserController extends Controller
                 'message' => "Não foi possível criar o usuário. Tente novamente mais tarde.",
             ], 500);
         }
+    }
+
+    public function update(UserRequest $request, int $id) : JsonResponse
+    {   
+        $validations = $request->validated();
+
+        try{
+            $user = $this->userService->updateUser($validations, $id);
+            
+            return response()->json([
+                'status' => true,
+                 'message' => "Usuário editado com sucesso!",
+                 'user' => $user->load('documents'),
+             ], 201);
+        } catch(Exception $e){
+            return response()->json([
+                'status' => true,
+                'message' => "Usuário não editado!",
+                'user' => $user,
+            ], 400);
+        }
+        
     }
 }
