@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
-use Exception;
-use App\Models\User;
-use Illuminate\Http\JsonResponse;
-use App\Http\Services\UserService;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Services\UserService;
+use App\Http\Requests\UserRequest;
+use Illuminate\Http\JsonResponse;
+use App\Models\User;
+use Exception;
 
 class UserController extends Controller
 {
@@ -63,8 +63,9 @@ class UserController extends Controller
     {   
         $validations = $request->validated();
 
+        $user = $this->userService->updateUser($validations, $id);
+        
         try{
-            $user = $this->userService->updateUser($validations, $id);
             
             return response()->json([
                 'status' => true,
